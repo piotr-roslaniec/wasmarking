@@ -28,6 +28,9 @@ use jf_relations::{
 };
 use num_bigint::BigUint;
 
+mod benchmarks;
+pub use benchmarks::*;
+
 pub enum ArkRelation {
     Xor,
     Withdraw,
@@ -167,8 +170,7 @@ impl JfRelation {
     pub fn verify_proof(&self, proof: &JfProof<Curve>, vk: &JfVerifyingKey<Curve>) {
         let input = jf_relation().public_input();
         assert!(
-            PlonkKzgSnark::<Curve>::verify::<StandardTranscript>(&vk, &input, &proof, None,)
-                .is_ok()
+            PlonkKzgSnark::<Curve>::verify::<StandardTranscript>(vk, &input, proof, None,).is_ok()
         )
     }
 }
